@@ -1,0 +1,5 @@
+https://peach.blender.org/about/
+
+CC 3.0 license: https://creativecommons.org/licenses/by/3.0/legalcode
+
+Blender Foundation | www.blender.org
