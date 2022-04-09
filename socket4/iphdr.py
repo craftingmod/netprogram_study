@@ -30,13 +30,13 @@ class Iphdr:
     unpacked = struct.unpack("!BBHHHBBH4s4s", buffer[:20])
     return unpacked
 
-  def getPacketSize(unpacked_ipheader:bytes):
+  def getPacketSize(unpacked_ipheader:tuple):
     return unpacked_ipheader[2]
 
-  def getProtocolId(unpacked_ipheader:bytes):
+  def getProtocolId(unpacked_ipheader:tuple):
     return unpacked_ipheader[6]
 
-  def getIP(unpacked_ipheader:bytes):
+  def getIP(unpacked_ipheader:tuple):
     src_ip = socket.inet_ntoa(unpacked_ipheader[8])
     dest_ip = socket.inet_ntoa(unpacked_ipheader[9])
     return (src_ip, dest_ip)
