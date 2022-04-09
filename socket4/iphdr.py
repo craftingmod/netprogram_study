@@ -26,6 +26,21 @@ class Iphdr:
     packed += struct.pack("!4s4s", self.saddr, self.daddr)
     return packed
 
+  def packWithoutCheck(self):
+    packed = b""
+    packed += struct.pack("!BBH", self.ver_len, self.tos, self.tot_len)
+    packed += struct.pack("!HH", self.id, self.frag_off)
+    packed += struct.pack("!BBH", self.ttl, self.protocol, 0)
+    packed += struct.pack("!4s4s", self.saddr, self.daddr)
+    return packed
+
+  def pack_Pseudoheader(self, packet_len:short):
+    packed = b""
+    packed += struct.pack("!4s", self.saddr)
+    packed += struct.pack("!4s", self.daddr)
+    packed += struct.pack("!BBH", 0, self.protocol, packet_len)
+    return packed
+
   def unpack_Iphdr(buffer:bytes):
     unpacked = struct.unpack("!BBHHHBBH4s4s", buffer[:20])
     return unpacked

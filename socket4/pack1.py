@@ -10,5 +10,3 @@ unpacked_iphdr = Iphdr.unpack_Iphdr(packed_iphdr)
 print(unpacked_iphdr)
 print(f"Packet Size: {Iphdr.getPacketSize(unpacked_iphdr)}, Protocol ID: {Iphdr.getProtocolId(unpacked_iphdr)}, IP: {Iphdr.getIP(unpacked_iphdr)}")
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.sendto(packed_iphdr, ("localhost", 2500))
