@@ -1,0 +1,45 @@
+from http.server import HTTPServer, BaseHTTPRequestHandler
+from urllib import parse
+
+class http_handler(BaseHTTPRequestHandler):
+  def do_GET(self):
+    self.route()
+  
+  def do_POST(self):
+    self.route()
+
+  def route(self):
+    parsed_path = parse.urlparse(self.path)
+    
+    if self.path == "/":
+      self.send_html()
+    elif self.path == "/iot.png":
+      self.send_image()
+    else:
+      self.response(404, "Not Found")
+
+  def send_html(self):
+    self.send_response(200)
+    self.send_header("Content-Type", "text/html")
+    self.end_headers()
+    with open("index.html", "r", encoding="utf-8") as f:
+      msg = f.read()
+      self.wfile.write(msg.encode("utf-8"))
+    
+  def send_image(self):
+    self.send_response(200)
+    self.send_header("Content-Type", "image/png")
+    self.end_headers()
+    with open("iot.png", "rb") as f:
+      msg = f.read()
+      self.wfile.write(msg)
+    
+  def response(self, status_code, body):
+    self.send_response(status_code)
+    self.send_header("Content-Type", "text/plain")
+    self.end_headers()
+    self.wfile.write(body.encode("utf-8"))
+
+httpd = HTTPServer(("localhost", 8080), http_handler)
+print(f"Serving HTTP on localhost:{httpd.server_port}")
+httpd.serve_forever()
